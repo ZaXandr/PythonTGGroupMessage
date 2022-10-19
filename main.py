@@ -1,3 +1,5 @@
+import time
+
 from telethon import TelegramClient, sync, events
 
 with open('setup.txt', 'r') as f:
@@ -19,9 +21,14 @@ try:
         array = [row.strip() for row in file]
         message = input("Input message: ")
     for i in range(len(array)):
-        destination_channel_username = array[i]
-        entity = client.get_entity(destination_channel_username)
-        client.send_message(entity=entity, message=message)
+        try:
+            destination_channel_entity = array[i]
+            entity = client.get_entity(destination_channel_entity)
+            client.send_message(entity=entity, message=message)
+            time.sleep(15)
+        except Exception as e:
+            print(e)
+
 except Exception as e:
     print(e)
 client.disconnect()
